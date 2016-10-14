@@ -213,7 +213,7 @@ extension CVCalendarDayView {
         if let delegate = calendarView.delegate,
             let shouldShow = delegate.preliminaryView?(shouldDisplayOnDayView: self) , shouldShow {
                 if let preView = delegate.preliminaryView?(viewOnDayView: self) {
-                    weekView.insertSubview(preView, at: 0)
+                    insertSubview(preView, at: 0)
                     preView.layer.zPosition = CGFloat(-MAXFLOAT)
                 }
         }
@@ -224,7 +224,7 @@ extension CVCalendarDayView {
             let shouldShow = delegate.supplementaryView?(shouldDisplayOnDayView: self) ,
             shouldShow {
                 if let supView = delegate.supplementaryView?(viewOnDayView: self) {
-                    weekView.insertSubview(supView, at: 0)
+                    insertSubview(supView, at: 0)
                 }
         }
     }

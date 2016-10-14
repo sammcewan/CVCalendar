@@ -51,7 +51,9 @@ extension CVDate {
     }
     
     public func convertedDate() -> Foundation.Date? {
-        let calendar = Calendar.current
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+
         var comps = Manager.componentsForDate(Foundation.Date())
 
         comps.year = year

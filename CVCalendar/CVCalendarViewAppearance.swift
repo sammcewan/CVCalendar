@@ -20,14 +20,14 @@ public final class CVCalendarViewAppearance: NSObject {
 
     /// Default text options.
     public var dayLabelPresentWeekdayInitallyBold: Bool? = true
-    public var dayLabelWeekdayFont: UIFont? = UIFont(name: "Avenir", size: 18)
-    public var dayLabelPresentWeekdayFont: UIFont? = UIFont(name: "Avenir", size: 18)
-    public var dayLabelPresentWeekdayBoldFont: UIFont? = UIFont(name: "Avenir-Heavy", size: 18)
+    public var dayLabelWeekdayFont: UIFont? = UIFont(name: "Lato-Regular", size: 18)
+    public var dayLabelPresentWeekdayFont: UIFont? = UIFont(name: "Lato-Regular", size: 18)
+    public var dayLabelPresentWeekdayBoldFont: UIFont? = UIFont(name: "Lato-Bold", size: 18)
     public var dayLabelPresentWeekdayHighlightedFont: UIFont? =
-        UIFont(name: "Avenir-Heavy", size: 18)
-    public var dayLabelPresentWeekdaySelectedFont: UIFont? = UIFont(name: "Avenir-Heavy", size: 18)
-    public var dayLabelWeekdayHighlightedFont: UIFont? = UIFont(name: "Avenir-Heavy", size: 18)
-    public var dayLabelWeekdaySelectedFont: UIFont? = UIFont(name: "Avenir-Heavy", size: 18)
+        UIFont(name: "Lato-Bold", size: 18)
+    public var dayLabelPresentWeekdaySelectedFont: UIFont? = UIFont(name: "Lato-Bold", size: 18)
+    public var dayLabelWeekdayHighlightedFont: UIFont? = UIFont(name: "Lato-Bold", size: 18)
+    public var dayLabelWeekdaySelectedFont: UIFont? = UIFont(name: "Lato-Bold", size: 18)
 
     /// Default text color.
     public var dayLabelWeekdayDisabledColor: UIColor? = .gray
