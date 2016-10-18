@@ -76,13 +76,7 @@ public final class CVCalendarManager {
 
     public func weekdayForDate(_ date: Foundation.Date) -> Int {
         let units = weekdayUnit
-
         let components = (calendar as NSCalendar).components(units, from: date)
-
-        // print("NSDate: \(date), Weekday: \(components.weekday)")
-
-        // let weekday = calendar.ordinalityOfUnit(units, inUnit: WeekUnit, forDate: date)
-
         return Int(components.weekday!)
     }
 
