@@ -58,7 +58,7 @@ public final class CVAuxiliaryView: UIView {
             switch shape {
             case .rightFlag: path = rightFlagPath()
             case .leftFlag: path = leftFlagPath()
-            case .circle: path = circlePath()
+            case .roundedRect: path = roundedRectPath()
             case .rect: path = rectPath()
             case .custom(let customPathBlock): path = customPathBlock(rect)
             }
@@ -77,10 +77,6 @@ public final class CVAuxiliaryView: UIView {
             path.fill()
         }
     }
-
-    deinit {
-        //println("[CVCalendar Recovery]: AuxiliaryView is deinited.")
-    }
 }
 
 extension CVAuxiliaryView {
@@ -91,22 +87,24 @@ extension CVAuxiliaryView {
 }
 
 extension CVAuxiliaryView {
-    func circlePath() -> UIBezierPath {
+    func roundedRectPath() -> UIBezierPath {
+        let offset: CGFloat = 8.0
+        let path = UIBezierPath(roundedRect: CGRect(x: offset, y: offset, width: bounds.width - offset * 2, height: frame.height - offset * 2), cornerRadius: 3.0)
+        return path
+    }
+    
+    private func circlePath() -> UIBezierPath {
         let arcCenter = CGPoint(x: frame.width / 2, y: frame.height / 2)
         let startAngle = CGFloat(0)
         let endAngle = CGFloat(M_PI * 2.0)
         let clockwise = true
-
+        
         let path = UIBezierPath(arcCenter: arcCenter, radius: radius,
                                 startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
-
         return path
     }
 
     func rightFlagPath() -> UIBezierPath {
-//        let appearance = dayView.calendarView.appearance
-//        let offset = appearance.spaceBetweenDayViews!
-
         let flag = UIBezierPath()
         flag.move(to: CGPoint(x: bounds.width / 2, y: bounds.height / 2 - radius))
         flag.addLine(to: CGPoint(x: bounds.width, y: bounds.height / 2 - radius))
@@ -135,7 +133,6 @@ extension CVAuxiliaryView {
     }
 
     func rectPath() -> UIBezierPath {
-//        let midX = bounds.width / 2
         let midY = bounds.height / 2
 
         let appearance = dayView.calendarView.appearance

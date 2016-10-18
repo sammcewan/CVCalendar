@@ -11,7 +11,7 @@ import UIKit
 public enum CVShape {
     case leftFlag
     case rightFlag
-    case circle
+    case roundedRect
     case rect
     case custom((CGRect) -> (UIBezierPath))
 }

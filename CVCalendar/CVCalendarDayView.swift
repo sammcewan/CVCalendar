@@ -306,7 +306,7 @@ extension CVCalendarDayView {
                     }
 
                     let dotMarker = CVAuxiliaryView(dayView: self,
-                                                    rect: markerFrame, shape: .circle)
+                                                    rect: markerFrame, shape: .roundedRect)
                     dotMarker.fillColor = color
                     dotMarker.center = CGPoint(x: x, y: y)
                     insertSubview(dotMarker, at: 0)
@@ -465,7 +465,7 @@ extension CVCalendarDayView {
 
         switch type {
         case .single:
-            shape = .circle
+            shape = .roundedRect
 
             if let delegate = calendarView.delegate,
                 let shouldShowCustomSelection = delegate.shouldShowCustomSingleSelection?() ,
