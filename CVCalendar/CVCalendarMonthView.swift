@@ -40,7 +40,7 @@ public final class CVCalendarMonthView: UIView {
     public var potentialSize: CGSize {
         get {
             return CGSize(width: bounds.width,
-                          height: CGFloat(weekViews.count) * weekViews[0].bounds.height +
+                          height: CGFloat(6) * weekViews[0].bounds.height +
                             calendarView.appearance.spaceBetweenWeekViews! *
                             CGFloat(weekViews.count))
         }

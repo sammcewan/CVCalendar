@@ -89,7 +89,11 @@ extension CVAuxiliaryView {
 extension CVAuxiliaryView {
     func roundedRectPath() -> UIBezierPath {
         let offset: CGFloat = 8.0
-        let path = UIBezierPath(roundedRect: CGRect(x: offset, y: offset, width: bounds.width - offset * 2, height: frame.height - offset * 2), cornerRadius: 3.0)
+        
+        let width = min(bounds.width - offset * 2, bounds.height)
+        
+        let center = CGPoint(x: (frame.width - width) / 2, y: (frame.height - width) / 2)
+        let path = UIBezierPath(roundedRect: CGRect(x: center.x, y: center.y, width: width, height: width), cornerRadius: 3.0)
         return path
     }
     

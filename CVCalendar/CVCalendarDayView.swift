@@ -305,8 +305,7 @@ extension CVCalendarDayView {
                         break
                     }
 
-                    let dotMarker = CVAuxiliaryView(dayView: self,
-                                                    rect: markerFrame, shape: .roundedRect)
+                    let dotMarker = CVAuxiliaryView(dayView: self, rect: markerFrame, shape: .roundedRect)
                     dotMarker.fillColor = color
                     dotMarker.center = CGPoint(x: x, y: y)
                     insertSubview(dotMarker, at: 0)

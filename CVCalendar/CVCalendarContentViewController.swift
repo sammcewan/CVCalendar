@@ -229,22 +229,10 @@ extension CVCalendarContentViewController {
                 constraintIn.firstAttribute == NSLayoutAttribute.height {
                     constraintIn.constant = height
 
-                    if animated {
-                        UIView.animate(withDuration: 0.2, delay: 0,
-                                                   options: UIViewAnimationOptions.curveLinear,
-                                                   animations: {
-                            self.layoutViews(viewsToLayout, toHeight: height)
-                            }) { _ in
-                                self.presentedMonthView.frame.size =
-                                    self.presentedMonthView.potentialSize
-                                self.presentedMonthView.updateInteractiveView()
-                        }
-                    } else {
-                        layoutViews(viewsToLayout, toHeight: height)
-                        presentedMonthView.updateInteractiveView()
-                        presentedMonthView.frame.size = presentedMonthView.potentialSize
-                        presentedMonthView.updateInteractiveView()
-                    }
+                    layoutViews(viewsToLayout, toHeight: height)
+                    presentedMonthView.updateInteractiveView()
+                    presentedMonthView.frame.size = presentedMonthView.potentialSize
+                    presentedMonthView.updateInteractiveView()
 
                     break
             }
