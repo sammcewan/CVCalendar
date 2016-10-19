@@ -255,11 +255,13 @@ extension CVCalendarView {
 // MARK: - Coordinator callback
 
 extension CVCalendarView {
-    public func didSelectDayView(_ dayView: CVCalendarDayView) {
+    public func didSelectDayView(_ dayView: CVCalendarDayView, shouldCallDelegate: Bool) {
         if let controller = contentController {
             presentedDate = dayView.date
-            delegate?.didSelectDayView?(dayView, animationDidFinish: false)
-            controller.performedDayViewSelection(dayView) // TODO: Update to range selection
+            if shouldCallDelegate == true {
+                delegate?.didSelectDayView?(dayView, animationDidFinish: false)
+            }
+            controller.performedDayViewSelection(dayView)
         }
     }
 }

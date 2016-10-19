@@ -171,7 +171,7 @@ extension CVCalendarDayView {
             if coordinator?.selectedDayView == nil && calendarView.shouldAutoSelectDayOnMonthChange {
                 let touchController = calendarView.touchController
                 touchController?.receiveTouchOnDayView(self)
-                calendarView.didSelectDayView(self)
+                calendarView.didSelectDayView(self, shouldCallDelegate: false)
             } else {
                 color = appearance?.dayLabelPresentWeekdayTextColor
                 if (appearance?.dayLabelPresentWeekdayInitallyBold!)! {

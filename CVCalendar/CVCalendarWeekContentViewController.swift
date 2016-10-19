@@ -206,7 +206,6 @@ public final class CVCalendarWeekContentViewController: CVCalendarContentViewCon
                                     withIdentifier: self.following)
                 self.updateSelection()
                 self.presentationEnabled = true
-
                 for weekView in self.weekViews.values {
                     self.prepareTopMarkersOnWeekView(weekView, hidden: false)
                 }
@@ -465,8 +464,8 @@ extension CVCalendarWeekContentViewController {
         let coordinator = calendarView.coordinator
         weekView.mapDayViews { dayView in
             if dayView.date.day == day && !dayView.isOut {
-                if let selected = coordinator?.selectedDayView , selected != dayView {
-                    self.calendarView.didSelectDayView(dayView)
+                if let selected = coordinator?.selectedDayView, selected != dayView {
+                    self.calendarView.didSelectDayView(dayView, shouldCallDelegate: false)
                 }
 
                 coordinator?.performDayViewSingleSelection(dayView)
