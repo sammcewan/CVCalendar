@@ -18,7 +18,7 @@ private let allUnits = yearUnit.union(monthUnit).union(weekUnit).union(weekdayUn
 public final class CVCalendarManager {
     // MARK: - Private properties
     fileprivate var components: DateComponents
-    fileprivate unowned let calendarView: CalendarView
+    fileprivate weak var calendarView: CalendarView!
 
     public var calendar: Calendar
 

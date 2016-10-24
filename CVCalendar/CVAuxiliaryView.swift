@@ -30,7 +30,7 @@ public final class CVAuxiliaryView: UIView {
         }
     }
 
-    public unowned let dayView: DayView
+    public weak var dayView: DayView!
 
     public init(dayView: DayView, rect: CGRect, shape: CVShape) {
         self.dayView = dayView

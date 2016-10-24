@@ -9,7 +9,7 @@
 import UIKit
 
 public final class CVCalendarViewAnimator {
-    fileprivate unowned let calendarView: CalendarView
+    fileprivate weak var calendarView: CalendarView!
 
     // MARK: - Public properties
     public weak var delegate: CVCalendarViewAnimatorDelegate!
@@ -32,7 +32,7 @@ extension CVCalendarViewAnimator {
     public func animateSelectionOnDayView(_ dayView: DayView) {
         let selectionAnimation = delegate.selectionAnimation()
         dayView.setSelectedWithType(.single)
-        selectionAnimation(dayView) { [unowned dayView] _ in
+        selectionAnimation(dayView) { [weak dayView] _ in
             let _ = dayView
             // Something...
         }

@@ -16,7 +16,7 @@ open class CVCalendarContentViewController: UIViewController {
     open let following = "Following"
 
     // MARK: - Public Properties
-    open unowned let calendarView: CalendarView
+    open weak var calendarView: CalendarView!
     open let scrollView: UIScrollView
 
     open var presentedMonthView: MonthView

@@ -9,7 +9,7 @@
 import UIKit
 
 public final class CVCalendarTouchController {
-    fileprivate unowned let calendarView: CalendarView
+    fileprivate weak var calendarView: CalendarView!
 
     // MARK: - Properties
     public var coordinator: Coordinator {
