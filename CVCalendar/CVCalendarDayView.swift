@@ -25,25 +25,21 @@ public final class CVCalendarDayView: UIView {
     public var isDisabled: Bool { return !self.isUserInteractionEnabled }
 
     public weak var monthView: CVCalendarMonthView! {
-        get {
-            var monthView: MonthView!
-            if let weekView = weekView, let activeMonthView = weekView.monthView {
-                monthView = activeMonthView
-            }
-
-            return monthView
+        var monthView: MonthView!
+        if let weekView = weekView, let activeMonthView = weekView.monthView {
+            monthView = activeMonthView
         }
+
+        return monthView
     }
 
     public weak var calendarView: CVCalendarView! {
-        get {
-            var calendarView: CVCalendarView!
-            if let weekView = weekView, let activeCalendarView = weekView.calendarView {
-                calendarView = activeCalendarView
-            }
-
-            return calendarView
+        var calendarView: CVCalendarView!
+        if let weekView = weekView, let activeCalendarView = weekView.calendarView {
+            calendarView = activeCalendarView
         }
+
+        return calendarView
     }
 
     public override var frame: CGRect {
@@ -64,6 +60,10 @@ public final class CVCalendarDayView: UIView {
             isUserInteractionEnabled = isHidden ? false : true
         }
     }
+    
+    // MARK: - Private properties
+    
+    fileprivate var preliminaryView: UIView?
 
     // MARK: - Initialization
 
@@ -213,9 +213,14 @@ extension CVCalendarDayView {
         if let delegate = calendarView.delegate,
             let shouldShow = delegate.preliminaryView?(shouldDisplayOnDayView: self) , shouldShow {
                 if let preView = delegate.preliminaryView?(viewOnDayView: self) {
-                    insertSubview(preView, at: 0)
+                    preliminaryView?.removeFromSuperview()
+                    preliminaryView = preView
+                    weekView.insertSubview(preView, at: 0)
                     preView.layer.zPosition = CGFloat(-MAXFLOAT)
                 }
+        }
+        else {
+            preliminaryView?.removeFromSuperview()
         }
     }
 
