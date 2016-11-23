@@ -238,6 +238,9 @@ extension CVCalendarContentViewController {
     }
 
     public func updateLayoutIfNeeded() {
+        if calendarView == nil {
+            return
+        }
         if presentedMonthView.potentialSize.height != scrollView.bounds.height {
             updateHeight(presentedMonthView.potentialSize.height, animated: true)
         } else if presentedMonthView.frame.size != scrollView.frame.size {

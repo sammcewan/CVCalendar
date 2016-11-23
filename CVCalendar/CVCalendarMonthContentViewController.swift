@@ -387,6 +387,9 @@ extension CVCalendarMonthContentViewController {
     }
 
     public func selectDayViewWithDay(_ day: Int, inMonthView monthView: CVCalendarMonthView) {
+        guard let calendarView = calendarView else {
+            return
+        }
         let coordinator = calendarView.coordinator
         monthView.mapDayViews { dayView in
             if dayView.date.day == day && !dayView.isOut {
