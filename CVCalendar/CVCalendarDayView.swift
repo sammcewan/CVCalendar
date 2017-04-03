@@ -64,6 +64,8 @@ public final class CVCalendarDayView: UIView {
     // MARK: - Private properties
     
     fileprivate var preliminaryView: UIView?
+    fileprivate var supplementaryView: UIView?
+    fileprivate var dotColors = [UIColor]()
 
     // MARK: - Initialization
 
@@ -120,10 +122,12 @@ public final class CVCalendarDayView: UIView {
         } else {
             day = weekdaysIn![weekdayIndex]![0]
         }
+        
+        let calendar = self.calendarView.delegate?.calendar?() ?? Calendar.current
 
         if day == monthView.currentDay && !isOut {
-            let dateRange = Manager.dateRange(monthView.date)
-            let currentDateRange = Manager.dateRange(Foundation.Date())
+            let dateRange = Manager.dateRange(monthView.date, calendar: calendar)
+            let currentDateRange = Manager.dateRange(Foundation.Date(), calendar: calendar)
 
             if dateRange.month == currentDateRange.month &&
                 dateRange.year == currentDateRange.year {
@@ -131,7 +135,7 @@ public final class CVCalendarDayView: UIView {
             }
         }
 
-        let dateRange = Manager.dateRange(monthView.date)
+        let dateRange = Manager.dateRange(monthView.date, calendar: calendar)
         let year = dateRange.year
         let week = weekView.index + 1
         var month = dateRange.month
@@ -140,7 +144,7 @@ public final class CVCalendarDayView: UIView {
             day > 20 ? (month -= 1) : (month += 1)
         }
 
-        return CVDate(day: day, month: month, week: week, year: year)
+        return CVDate(day: day, month: month, week: week, year: year, calendar: calendar)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -185,7 +189,8 @@ extension CVCalendarDayView {
             color = appearance?.dayLabelWeekdayInTextColor
         }
         
-        let weekDay = self.date?.weekDay ?? .monday // Monday is default
+        let calendar = self.calendarView.delegate?.calendar?() ?? Calendar.current
+        let weekDay = self.date?.weekDay(calendar: calendar) ?? .monday // Monday is default
         let status: CVStatus = {
             if isDisabled { return .disabled }
             else if isOut { return .out }
@@ -229,8 +234,13 @@ extension CVCalendarDayView {
             let shouldShow = delegate.supplementaryView?(shouldDisplayOnDayView: self) ,
             shouldShow {
                 if let supView = delegate.supplementaryView?(viewOnDayView: self) {
-                    insertSubview(supView, at: 0)
+                    supplementaryView?.removeFromSuperview()
+                    supplementaryView = supView
+                    weekView.insertSubview(supView, at: 0)
                 }
+        } else {
+            supplementaryView?.removeFromSuperview()
+            supplementaryView = nil
         }
     }
 
@@ -296,6 +306,8 @@ extension CVCalendarDayView {
                 if colors!.count > 3 {
                     assert(false, "Only 3 dot markers allowed per day")
                 }
+                
+                dotColors = colors!
 
                 for (index, color) in (colors!).enumerated() {
                     var x: CGFloat = 0
@@ -344,22 +356,17 @@ extension CVCalendarDayView {
                 }
 
                 func colorMarker() {
-                    if let delegate = calendarView.delegate {
-                        let appearance = calendarView.appearance
-                        var color: UIColor?
-                        if unwinded {
-                            if let myColor = delegate.dotMarker?(colorOnDayView: self) {
-                                color = isOut ?
-                                    appearance?.dayLabelWeekdayOutTextColor : myColor[dotIndex]
-                            }
-                        } else {
-                            color = appearance?.dotMarkerColor
-                        }
-
-                        dotMarker.fillColor = color
-                        dotMarker.setNeedsDisplay()
+                    let appearance = calendarView.appearance
+                    var color: UIColor?
+                    if unwinded {
+                        color = isOut ?
+                            appearance?.dayLabelWeekdayOutTextColor : dotColors[dotIndex]
+                    } else {
+                        color = appearance?.dotMarkerColor
                     }
-
+                    
+                    dotMarker.fillColor = color
+                    dotMarker.setNeedsDisplay()
                 }
 
                 func moveMarker() {
@@ -374,7 +381,7 @@ extension CVCalendarDayView {
                                 CGAffineTransform(translationX: 0, y: offset)
 
                         if dotMarker.center.y + offset > frame.maxY {
-                            coloring = true
+                            //coloring = true
                         }
                     } else {
                         transform = CGAffineTransform.identity
@@ -464,7 +471,8 @@ extension CVCalendarDayView {
         var backgroundAlpha: CGFloat!
         var shape: CVShape!
         
-        let weekDay = self.date?.weekDay ?? .monday // Monday is default
+        let calendar = self.calendarView.delegate?.calendar?() ?? Calendar.current
+        let weekDay = self.date?.weekDay(calendar: calendar) ?? .monday // Monday is default
         let present: CVPresent = isCurrentDay ? .present : .not
 
         switch type {
@@ -556,7 +564,8 @@ extension CVCalendarDayView {
                 font = appearance.dayLabelWeekdayFont
             }
             
-            let weekDay = self.date?.weekDay ?? .monday // Monday is default
+            let calendar = self.calendarView.delegate?.calendar?() ?? Calendar.current
+            let weekDay = self.date?.weekDay(calendar: calendar) ?? .monday // Monday is default
             let status: CVStatus = {
                 if isDisabled { return .disabled }
                 else if isOut { return .out }
@@ -571,6 +580,7 @@ extension CVCalendarDayView {
 
             if clearing {
                 selectionView?.removeFromSuperview()
+                selectionView = nil
             }
         }
     }
@@ -596,6 +606,7 @@ extension CVCalendarDayView {
         }
 
         if selectionView != nil {
+            selectionView?.removeFromSuperview()
             setSelectedWithType(.single)
         }
     }
